@@ -139,6 +139,53 @@ namespace Paint
             shape = "rectangle";
         }
 
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog o = new OpenFileDialog();
+            o.Filter = "Png files|*.png|jpeg files|*jpg|bitmaps|*.bmp";
+            if (o.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Pcanvas.Image = (Image)Image.FromFile(o.FileName).Clone();
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Bitmap bmp = new Bitmap(Pcanvas.Width, Pcanvas.Height);
+            Graphics g = Graphics.FromImage(bmp);
+            Rectangle rect = Pcanvas.RectangleToScreen(Pcanvas.ClientRectangle);
+            g.CopyFromScreen(rect.Location, Point.Empty, Pcanvas.Size);
+            g.Dispose();
+            SaveFileDialog s = new SaveFileDialog();
+            s.Filter = "Png files|*.png|jpeg files|*jpg|bitmaps|*.bmp";
+            if (s.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                if (File.Exists(s.FileName))
+                {
+                    File.Delete(s.FileName);
+                }
+                if (s.FileName.Contains(".jpg"))
+                {
+                    bmp.Save(s.FileName, ImageFormat.Jpeg);
+                }
+                else if (s.FileName.Contains(".png"))
+                {
+                    bmp.Save(s.FileName, ImageFormat.Png);
+                }
+                else if (s.FileName.Contains(".bmp"))
+                {
+                    bmp.Save(s.FileName, ImageFormat.Bmp);
+                }
+                MessageBox.Show("Your File has been saved Sucessfully");
+
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void btn_triangle_Click(object sender, EventArgs e)
         {
             shape = "triangle";

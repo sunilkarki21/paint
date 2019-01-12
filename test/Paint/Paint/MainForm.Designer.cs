@@ -1,11 +1,4 @@
-﻿/*
- * Creado por SharpDevelop.
- * Usuario: Axel
- * Fecha: 08/08/2015
- * Hora: 07:24 p.m.
- * 
- * Para cambiar esta plantilla use Herramientas | Opciones | Codificación | Editar Encabezados Estándar
- */
+﻿ 
 namespace Paint
 {
 	partial class MainForm
@@ -70,6 +63,7 @@ namespace Paint
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btn_run = new System.Windows.Forms.Button();
             this.Colores.SuspendLayout();
             this.Figuras.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -230,7 +224,7 @@ namespace Paint
             this.btn_clear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_clear.BackColor = System.Drawing.Color.White;
             this.btn_clear.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btn_clear.Location = new System.Drawing.Point(775, 45);
+            this.btn_clear.Location = new System.Drawing.Point(794, 45);
             this.btn_clear.Margin = new System.Windows.Forms.Padding(1);
             this.btn_clear.Name = "btn_clear";
             this.btn_clear.Size = new System.Drawing.Size(136, 39);
@@ -247,7 +241,7 @@ namespace Paint
             this.Pcanvas.BackColor = System.Drawing.Color.White;
             this.Pcanvas.Location = new System.Drawing.Point(-566, 118);
             this.Pcanvas.Name = "Pcanvas";
-            this.Pcanvas.Size = new System.Drawing.Size(1139, 357);
+            this.Pcanvas.Size = new System.Drawing.Size(1158, 357);
             this.Pcanvas.TabIndex = 24;
             this.Pcanvas.TabStop = false;
             this.Pcanvas.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PcanvasMouseClick);
@@ -272,7 +266,7 @@ namespace Paint
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1023, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1042, 24);
             this.menuStrip1.TabIndex = 27;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -289,21 +283,21 @@ namespace Paint
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -311,18 +305,29 @@ namespace Paint
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(580, 118);
+            this.textBox1.Location = new System.Drawing.Point(599, 118);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(430, 357);
+            this.textBox1.Size = new System.Drawing.Size(352, 357);
             this.textBox1.TabIndex = 28;
+            // 
+            // btn_run
+            // 
+            this.btn_run.Location = new System.Drawing.Point(957, 138);
+            this.btn_run.Name = "btn_run";
+            this.btn_run.Size = new System.Drawing.Size(75, 23);
+            this.btn_run.TabIndex = 29;
+            this.btn_run.Text = "Run";
+            this.btn_run.UseVisualStyleBackColor = true;
+            this.btn_run.Click += new System.EventHandler(this.btn_run_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1023, 493);
+            this.ClientSize = new System.Drawing.Size(1042, 493);
+            this.Controls.Add(this.btn_run);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.Pcanvas);
@@ -358,5 +363,6 @@ namespace Paint
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button btnpoly;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btn_run;
     }
 }

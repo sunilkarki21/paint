@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using System.Drawing.Imaging;
 using System.IO;
 using Shapes;
+using System.Text.RegularExpressions;
 
 namespace Paint
 {
@@ -31,6 +32,16 @@ namespace Paint
         Color color;
         ShapeFactory shapeFactory = new ShapeFactory();
         Shape shapes;
+        Boolean hasDrawOrMoveValue = false;
+        int loopCounter = 0;
+        Validation validate;
+        String line = "";
+        public int radius = 0;
+        public int width = 0;
+        public int height = 0;
+        public int dSize = 0;
+        public int counter = 0;
+
         public MainForm()
         {
             //
@@ -186,6 +197,7 @@ namespace Paint
             this.Close();
         }
 
+
         private void btn_triangle_Click(object sender, EventArgs e)
         {
             shape = "triangle";
@@ -254,7 +266,7 @@ namespace Paint
 
                     pnt[4].X = cX;
                     pnt[4].Y = cY;
-                    
+
 
                     g.FillPolygon(myBrush, pnt);
 
@@ -278,9 +290,589 @@ namespace Paint
         {
             shape = "polygon";
         }
- 
 
 
+        private void btn_run_Click(object sender, EventArgs e)
+        {
+            hasDrawOrMoveValue = false;
+            if (textBox1.Text != null && textBox1.Text != "")
+            {
+                validate = new Validation(textBox1);
+                if (!validate.isSomethingInvalid)
+                {
+                    MessageBox.Show("Everything is working fine");
+                    loadCommand();
+                }
+
+            }
+        }
+        private void loadCommand()
+        {
+            int numberOfLines = textBox1.Lines.Length;
+
+            for (int i = 0; i < numberOfLines; i++)
+            {
+                String oneLineCommand = textBox1.Lines[i];
+                oneLineCommand = oneLineCommand.Trim();
+                if (!oneLineCommand.Equals(""))
+                {
+                    Boolean hasDrawto = Regex.IsMatch(oneLineCommand.ToLower(), @"\bdrawto\b");
+                    Boolean hasMoveto = Regex.IsMatch(oneLineCommand.ToLower(), @"\bmoveto\b");
+                    if (hasDrawto || hasMoveto)
+                    {
+                        String args = oneLineCommand.Substring(6, (oneLineCommand.Length - 6));
+                        String[] parms = args.Split(',');
+                        for (int j = 0; j < parms.Length; j++)
+                        {
+                            parms[j] = parms[j].Trim();
+                        }
+                        cX = int.Parse(parms[0]);
+                        cY = int.Parse(parms[1]);
+                        hasDrawOrMoveValue = true;
+                    }
+                    else
+                    {
+                        hasDrawOrMoveValue = false;
+                    }
+                    if (hasMoveto)
+                    {
+                        Pcanvas.Refresh();
+                    }
+                }
+            }
+
+            for (loopCounter = 0; loopCounter < numberOfLines; loopCounter++)
+            {
+                String oneLineCommand = textBox1.Lines[loopCounter];
+                oneLineCommand = oneLineCommand.Trim();
+                if (!oneLineCommand.Equals(""))
+                {
+                    RunCommand(oneLineCommand);
+                }
+
+            }
+        }
+
+        private void RunCommand(String oneLineCommand)
+        {
+
+            Boolean hasPlus = oneLineCommand.Contains('+');
+            Boolean hasEquals = oneLineCommand.Contains("=");
+            if (hasEquals)
+            {
+                oneLineCommand = Regex.Replace(oneLineCommand, @"\s+", " ");
+                string[] words = oneLineCommand.Split(' ');
+                //removing white spaces in between words
+                for (int i = 0; i < words.Length; i++)
+                {
+                    words[i] = words[i].Trim();
+                }
+                String firstWord = words[0].ToLower();
+                if (firstWord.Equals("if"))
+                {
+                    Boolean loop = false;
+                    if (words[1].ToLower().Equals("radius"))
+                    {
+                        if (radius == int.Parse(words[3]))
+                        {
+                            loop = true;
+                        }
+                    }
+                    else if (words[1].ToLower().Equals("width"))
+                    {
+                        if (width == int.Parse(words[3]))
+                        {
+                            loop = true;
+                        }
+                    }
+                    else if (words[1].ToLower().Equals("height"))
+                    {
+                        if (height == int.Parse(words[3]))
+                        {
+                            loop = true;
+                        }
+
+                    }
+                    else if (words[1].ToLower().Equals("counter"))
+                    {
+                        if (counter == int.Parse(words[3]))
+                        {
+                            loop = true;
+                        }
+                    }
+                    int ifStartLine = (GetIfStartLineNumber());
+                    int ifEndLine = (GetEndifEndLineNumber() - 1);
+                    loopCounter = ifEndLine;
+                    if (loop)
+                    {
+                        for (int j = ifStartLine; j <= ifEndLine; j++)
+                        {
+                            string oneLineCommand1 = textBox1.Lines[j];
+                            oneLineCommand1 = oneLineCommand1.Trim();
+                            if (!oneLineCommand1.Equals(""))
+                            {
+                                RunCommand(oneLineCommand1);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("If Statement is false");
+                    }
+                }
+                else
+                {
+                    string[] words2 = oneLineCommand.Split('=');
+                    for (int j = 0; j < words2.Length; j++)
+                    {
+                        words2[j] = words2[j].Trim();
+                    }
+                    if (words2[0].ToLower().Equals("radius"))
+                    {
+                        radius = int.Parse(words2[1]);
+                    }
+                    else if (words2[0].ToLower().Equals("width"))
+                    {
+                        width = int.Parse(words2[1]);
+                    }
+                    else if (words2[0].ToLower().Equals("height"))
+                    {
+                        height = int.Parse(words2[1]);
+                    }
+                    else if (words2[0].ToLower().Equals("counter"))
+                    {
+                        counter = int.Parse(words2[1]);
+                    }
+                }
+            }
+            else if (hasPlus)
+            {
+                oneLineCommand = System.Text.RegularExpressions.Regex.Replace(oneLineCommand, @"\s+", " ");
+                string[] words = oneLineCommand.Split(' ');
+                if (words[0].ToLower().Equals("repeat"))
+                {
+                    counter = int.Parse(words[1]);
+                    if (words[2].ToLower().Equals("circle"))
+                    {
+                        int increaseValue = GetSize(oneLineCommand);
+                        radius = increaseValue;
+                        for (int j = 0; j < counter; j++)
+                        {
+                            DrawCircle(radius);
+                            radius += increaseValue;
+                        }
+                    }
+                    else if (words[2].ToLower().Equals("rectangle"))
+                    {
+                        int increaseValue = GetSize(oneLineCommand);
+                        dSize = increaseValue;
+                        for (int j = 0; j < counter; j++)
+                        {
+                            DrawRectangle(dSize, dSize);
+                            dSize += increaseValue;
+                        }
+                    }
+                    else if (words[2].ToLower().Equals("triangle"))
+                    {
+                        int increaseValue = GetSize(oneLineCommand);
+                        dSize = increaseValue;
+                        for (int j = 0; j < counter; j++)
+                        {
+                            DrawTriangle(dSize, dSize, dSize);
+                            dSize += increaseValue;
+                        }
+                    }
+                }
+                else
+                {
+                    string[] words2 = oneLineCommand.Split('+');
+                    for (int j = 0; j < words2.Length; j++)
+                    {
+                        words2[j] = words2[j].Trim();
+                    }
+                    if (words2[0].ToLower().Equals("radius"))
+                    {
+                        radius += int.Parse(words2[1]);
+                    }
+                    else if (words2[0].ToLower().Equals("width"))
+                    {
+                        width += int.Parse(words2[1]);
+                    }
+                    else if (words2[0].ToLower().Equals("height"))
+                    {
+                        height += int.Parse(words2[1]);
+                    }
+                }
+            }
+            else
+            {
+                sendDrawCommand(oneLineCommand);
+            }
+
+
+        }
+
+        private int GetEndifEndLineNumber()
+        {
+            int numberOfLines = textBox1.Lines.Length;
+            int lineNum = 0;
+
+            for (int i = 0; i < numberOfLines; i++)
+            {
+                String oneLineCommand = textBox1.Lines[i];
+                oneLineCommand = oneLineCommand.Trim();
+                if (oneLineCommand.ToLower().Equals("endif"))
+                {
+                    lineNum = i + 1;
+
+                }
+            }
+            return lineNum;
+        }
+
+        private int GetIfStartLineNumber()
+        {
+            int numberOfLines = textBox1.Lines.Length;
+            int lineNum = 0;
+
+            for (int i = 0; i < numberOfLines; i++)
+            {
+                String oneLineCommand = textBox1.Lines[i];
+                oneLineCommand = Regex.Replace(oneLineCommand, @"\s+", " ");
+                string[] words = oneLineCommand.Split(' ');
+                //removing white spaces in between words
+                for (int j = 0; j < words.Length; j++)
+                {
+                    words[j] = words[j].Trim();
+                }
+                String firstWord = words[0].ToLower();
+                oneLineCommand = oneLineCommand.Trim();
+                if (firstWord.Equals("if"))
+                {
+                    lineNum = i + 1;
+
+                }
+            }
+            return lineNum;
+        }
+
+        private int GetLoopEndLineNumber()
+        {
+            int numberOfLines = textBox1.Lines.Length;
+            int lineNum = 0;
+
+            for (int i = 0; i < numberOfLines; i++)
+            {
+                String oneLineCommand = textBox1.Lines[i];
+                oneLineCommand = oneLineCommand.Trim();
+                if (oneLineCommand.ToLower().Equals("endloop"))
+                {
+                    lineNum = i + 1;
+
+                }
+            }
+            return lineNum;
+        }
+
+        private int GetLoopStartLineNumber()
+        {
+            int numberOfLines = textBox1.Lines.Length;
+            int lineNum = 0;
+
+            for (int i = 0; i < numberOfLines; i++)
+            {
+                String oneLineCommand = textBox1.Lines[i];
+                oneLineCommand = Regex.Replace(oneLineCommand, @"\s+", " ");
+                string[] words = oneLineCommand.Split(' ');
+                //removing white spaces in between words
+                for (int j = 0; j < words.Length; j++)
+                {
+                    words[j] = words[j].Trim();
+                }
+                String firstWord = words[0].ToLower();
+                oneLineCommand = oneLineCommand.Trim();
+                if (firstWord.Equals("loop"))
+                {
+                    lineNum = i + 1;
+
+                }
+            }
+            return lineNum;
+
+        }
+
+        private int GetSize(string lineCommand)
+        {
+            int value = 0;
+            if (lineCommand.ToLower().Contains("radius"))
+            {
+                int pos = (lineCommand.IndexOf("radius") + 6);
+                int size = lineCommand.Length;
+                String tempLine = lineCommand.Substring(pos, (size - pos));
+                tempLine = tempLine.Trim();
+                String newTempLine = tempLine.Substring(1, (tempLine.Length - 1));
+                newTempLine = newTempLine.Trim();
+                value = int.Parse(newTempLine);
+
+            }
+            else if (lineCommand.ToLower().Contains("size"))
+            {
+                int pos = (lineCommand.IndexOf("size") + 4);
+                int size = lineCommand.Length;
+                String tempLine = lineCommand.Substring(pos, (size - pos));
+                tempLine = tempLine.Trim();
+                String newTempLine = tempLine.Substring(1, (tempLine.Length - 1));
+                newTempLine = newTempLine.Trim();
+                value = int.Parse(newTempLine);
+            }
+            return value;
+        }
+
+        private void sendDrawCommand(string lineOfCommand)
+        {
+            String[] shapes = { "circle", "rectangle", "triangle", "polygon" };
+            String[] variable = { "radius", "width", "height", "counter", "size" };
+
+            lineOfCommand = System.Text.RegularExpressions.Regex.Replace(lineOfCommand, @"\s+", " ");
+            string[] words = lineOfCommand.Split(' ');
+            //removing white spaces in between words
+            for (int i = 0; i < words.Length; i++)
+            {
+                words[i] = words[i].Trim();
+            }
+            String firstWord = words[0].ToLower();
+            Boolean firstWordShape = shapes.Contains(firstWord);
+            if (firstWordShape)
+            {
+
+                if (firstWord.Equals("circle"))
+                {
+                    Boolean secondWordIsVariable = variable.Contains(words[1].ToLower());
+                    if (secondWordIsVariable)
+                    {
+                        if (words[1].ToLower().Equals("radius"))
+                        {
+                            DrawCircle(radius);
+                        }
+                    }
+                    else
+                    {
+                        DrawCircle(Int32.Parse(words[1]));
+                    }
+
+                }
+                else if (firstWord.Equals("rectangle"))
+                {
+                    String args = lineOfCommand.Substring(9, (lineOfCommand.Length - 9));
+                    String[] parms = args.Split(',');
+                    for (int i = 0; i < parms.Length; i++)
+                    {
+                        parms[i] = parms[i].Trim();
+                    }
+                    Boolean secondWordIsVariable = variable.Contains(parms[0].ToLower());
+                    Boolean thirdWordIsVariable = variable.Contains(parms[1].ToLower());
+                    if (secondWordIsVariable)
+                    {
+                        if (thirdWordIsVariable)
+                        {
+                            DrawRectangle(width, height);
+                        }
+                        else
+                        {
+                            DrawRectangle(width, Int32.Parse(parms[1]));
+                        }
+
+                    }
+                    else
+                    {
+                        if (thirdWordIsVariable)
+                        {
+                            DrawRectangle(Int32.Parse(parms[0]), height);
+                        }
+                        else
+                        {
+                            DrawRectangle(Int32.Parse(parms[0]), Int32.Parse(parms[1]));
+                        }
+                    }
+                }
+                else if (firstWord.Equals("triangle"))
+                {
+                    String args = lineOfCommand.Substring(8, (lineOfCommand.Length - 8));
+                    String[] parms = args.Split(',');
+                    for (int i = 0; i < parms.Length; i++)
+                    {
+                        parms[i] = parms[i].Trim();
+                    }
+                    DrawTriangle(Int32.Parse(parms[0]), Int32.Parse(parms[1]), Int32.Parse(parms[2]));
+                }
+                else if (firstWord.Equals("polygon"))
+                {
+                    String args = lineOfCommand.Substring(8, (lineOfCommand.Length - 8));
+                    String[] parms = args.Split(',');
+                    for (int i = 0; i < parms.Length; i++)
+                    {
+                        parms[i] = parms[i].Trim();
+                    }
+                    if (parms.Length == 8)
+                    {
+                        DrawPolygon(Int32.Parse(parms[0]), Int32.Parse(parms[1]), Int32.Parse(parms[2]), Int32.Parse(parms[3]),
+                            Int32.Parse(parms[4]), Int32.Parse(parms[5]), Int32.Parse(parms[6]), Int32.Parse(parms[7]));
+                    }
+                    else if (parms.Length == 10)
+                    {
+                        DrawPolygon(Int32.Parse(parms[0]), Int32.Parse(parms[1]), Int32.Parse(parms[2]), Int32.Parse(parms[3]),
+                            Int32.Parse(parms[4]), Int32.Parse(parms[5]), Int32.Parse(parms[6]), Int32.Parse(parms[7]),
+                            Int32.Parse(parms[8]), Int32.Parse(parms[9]));
+                    }
+
+                }
+
+            }
+            else
+            {
+                if (firstWord.Equals("loop"))
+                {
+                    counter = int.Parse(words[1]);
+                    int loopStartLine = (GetLoopStartLineNumber());
+                    int loopEndLine = (GetLoopEndLineNumber() - 1);
+                    loopCounter = loopEndLine;
+                    for (int i = 0; i < counter; i++)
+                    {
+                        for (int j = loopStartLine; j <= loopEndLine; j++)
+                        {
+                            String oneLineCommand = textBox1.Lines[j];
+                            oneLineCommand = oneLineCommand.Trim();
+                            if (!oneLineCommand.Equals(""))
+                            {
+                                RunCommand(oneLineCommand);
+                            }
+                        }
+                    }
+                }
+                else if (firstWord.Equals("if"))
+                {
+                    Boolean loop = false;
+                    if (words[1].ToLower().Equals("radius"))
+                    {
+                        if (radius == int.Parse(words[1]))
+                        {
+                            loop = true;
+                        }
+                    }
+                    else if (words[1].ToLower().Equals("width"))
+                    {
+                        if (width == int.Parse(words[1]))
+                        {
+                            loop = true;
+                        }
+                    }
+                    else if (words[1].ToLower().Equals("height"))
+                    {
+                        if (height == int.Parse(words[1]))
+                        {
+                            loop = true;
+                        }
+
+                    }
+                    else if (words[1].ToLower().Equals("counter"))
+                    {
+                        if (counter == int.Parse(words[1]))
+                        {
+                            loop = true;
+                        }
+                    }
+                    int ifStartLine = (GetIfStartLineNumber());
+                    int ifEndLine = (GetEndifEndLineNumber() - 1);
+                    loopCounter = ifEndLine;
+                    if (loop)
+                    {
+                        for (int j = ifStartLine; j <= ifEndLine; j++)
+                        {
+                            String oneLineCommand = textBox1.Lines[j];
+                            oneLineCommand = oneLineCommand.Trim();
+                            if (!oneLineCommand.Equals(""))
+                            {
+                                RunCommand(oneLineCommand);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void DrawPolygon(int v1, int v2, int v3, int v4, int v5, int v6, int v7, int v8)
+        {
+            Pen myPen = new Pen(color);
+            Point[] pnt = new Point[5];
+
+            pnt[0].X = cX;
+            pnt[0].Y = cY;
+
+            pnt[1].X = cX - v1;
+            pnt[1].Y = cY - v2;
+
+            pnt[2].X = cX - v3;
+            pnt[2].Y = cY - v4;
+
+            pnt[3].X = cX - v5;
+            pnt[3].Y = cY - v6;
+
+            pnt[4].X = cX - v7;
+            pnt[4].Y = cY - v8;
+
+            g.DrawPolygon(myPen, pnt);
+        }
+
+        private void DrawPolygon(int v1, int v2, int v3, int v4, int v5, int v6, int v7, int v8, int v9, int v10)
+        {
+            Pen myPen = new Pen(color);
+            Point[] pnt = new Point[6];
+
+            pnt[0].X = cX;
+            pnt[0].Y = cY;
+
+            pnt[1].X = cX - v1;
+            pnt[1].Y = cY - v2;
+
+            pnt[2].X = cX - v3;
+            pnt[2].Y = cY - v4;
+
+            pnt[3].X = cX - v5;
+            pnt[3].Y = cY - v6;
+
+            pnt[4].X = cX - v7;
+            pnt[4].Y = cY - v8;
+
+            pnt[5].X = cX - v9;
+            pnt[5].Y = cY - v10;
+            g.DrawPolygon(myPen, pnt);
+        }
+        private void DrawTriangle(int rBase, int adj, int hyp)
+        {
+            Pen myPen = new Pen(color);
+            Point[] pnt = new Point[3];
+
+            pnt[0].X = cX;
+            pnt[0].Y = cY;
+
+            pnt[1].X = cX - rBase;
+            pnt[1].Y = cY;
+
+            pnt[2].X = cX;
+            pnt[2].Y = cY - adj;
+            g.DrawPolygon(myPen, pnt);
+        }
+        private void DrawRectangle(int width, int height)
+        {
+            Pen myPen = new Pen(color);
+            g.DrawRectangle(myPen, cX - width / 2, cY - height / 2, width, height);
+        }
+
+        private void DrawCircle(int radius)
+        {
+            Pen myPen = new Pen(color);
+            g.DrawEllipse(myPen, cX - radius, cY - radius, radius * 2, radius * 2);
+        }
 
     }
 }

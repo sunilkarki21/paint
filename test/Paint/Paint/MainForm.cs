@@ -35,8 +35,7 @@ namespace Paint
         Boolean hasDrawOrMoveValue = false;
         int loopCounter = 0;
         Validation validate;
-        String line = "";
-        public int radius = 0;
+         public int radius = 0;
         public int width = 0;
         public int height = 0;
         public int dSize = 0;
@@ -53,7 +52,7 @@ namespace Paint
             // TODO: Add constructor code after the InitializeComponent() call.
             //
             color = Color.Black;
-        }
+           }
         void MainFormMouseUp(object sender, MouseEventArgs e)
         {
 
@@ -105,7 +104,7 @@ namespace Paint
                 else if (shape == "eraser")
                 {
                     //   this.Cursor = Cursors.No;
-                    g.FillRectangle(new SolidBrush(color), e.X, e.Y, 60, 60);
+                    g.FillRectangle(new SolidBrush(Color.White), e.X, e.Y, 60, 60);
 
 
                 }
@@ -798,6 +797,12 @@ namespace Paint
                     }
                 }
             }
+        }
+
+        private void hintsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Hint hint = new Hint();
+            hint.Show();
         }
 
         private void DrawPolygon(int v1, int v2, int v3, int v4, int v5, int v6, int v7, int v8)

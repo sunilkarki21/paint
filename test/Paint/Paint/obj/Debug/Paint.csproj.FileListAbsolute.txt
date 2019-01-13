@@ -61,3 +61,4 @@ C:\Users\Dell\Desktop\testpaint\test\Paint\Paint\obj\Debug\Paint.csproj.Generate
 C:\Users\Dell\Desktop\testpaint\test\Paint\Paint\obj\Debug\Paint.csproj.CoreCompileInputs.cache
 C:\Users\Dell\Desktop\testpaint\test\Paint\Paint\obj\Debug\Paint.exe
 C:\Users\Dell\Desktop\testpaint\test\Paint\Paint\obj\Debug\Paint.pdb
+C:\Users\Dell\Desktop\testpaint\test\Paint\Paint\obj\Debug\Paint.Hint.resources

@@ -64,6 +64,8 @@ namespace Paint
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btn_run = new System.Windows.Forms.Button();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hintsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Colores.SuspendLayout();
             this.Figuras.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -263,7 +265,8 @@ namespace Paint
             // 
             this.menuStrip1.BackColor = System.Drawing.Color.LightSeaGreen;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1042, 24);
@@ -321,6 +324,21 @@ namespace Paint
             this.btn_run.UseVisualStyleBackColor = true;
             this.btn_run.Click += new System.EventHandler(this.btn_run_Click);
             // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.hintsToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // hintsToolStripMenuItem
+            // 
+            this.hintsToolStripMenuItem.Name = "hintsToolStripMenuItem";
+            this.hintsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.hintsToolStripMenuItem.Text = "Hints";
+            this.hintsToolStripMenuItem.Click += new System.EventHandler(this.hintsToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -364,5 +382,7 @@ namespace Paint
         private System.Windows.Forms.Button btnpoly;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btn_run;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hintsToolStripMenuItem;
     }
 }

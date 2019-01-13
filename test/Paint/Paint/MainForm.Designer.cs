@@ -62,10 +62,12 @@ namespace Paint
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.btn_run = new System.Windows.Forms.Button();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hintsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btn_run = new System.Windows.Forms.Button();
+            this.liveDemoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.githubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Colores.SuspendLayout();
             this.Figuras.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -266,7 +268,8 @@ namespace Paint
             this.menuStrip1.BackColor = System.Drawing.Color.LightSeaGreen;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.helpToolStripMenuItem});
+            this.helpToolStripMenuItem,
+            this.liveDemoToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1042, 24);
@@ -304,6 +307,21 @@ namespace Paint
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.hintsToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // hintsToolStripMenuItem
+            // 
+            this.hintsToolStripMenuItem.Name = "hintsToolStripMenuItem";
+            this.hintsToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.hintsToolStripMenuItem.Text = "Hints";
+            this.hintsToolStripMenuItem.Click += new System.EventHandler(this.hintsToolStripMenuItem_Click);
+            // 
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -324,20 +342,20 @@ namespace Paint
             this.btn_run.UseVisualStyleBackColor = true;
             this.btn_run.Click += new System.EventHandler(this.btn_run_Click);
             // 
-            // helpToolStripMenuItem
+            // liveDemoToolStripMenuItem
             // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.hintsToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
+            this.liveDemoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.githubToolStripMenuItem});
+            this.liveDemoToolStripMenuItem.Name = "liveDemoToolStripMenuItem";
+            this.liveDemoToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.liveDemoToolStripMenuItem.Text = "GitHub";
             // 
-            // hintsToolStripMenuItem
+            // githubToolStripMenuItem
             // 
-            this.hintsToolStripMenuItem.Name = "hintsToolStripMenuItem";
-            this.hintsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.hintsToolStripMenuItem.Text = "Hints";
-            this.hintsToolStripMenuItem.Click += new System.EventHandler(this.hintsToolStripMenuItem_Click);
+            this.githubToolStripMenuItem.Name = "githubToolStripMenuItem";
+            this.githubToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.githubToolStripMenuItem.Text = "Github";
+            this.githubToolStripMenuItem.Click += new System.EventHandler(this.githubToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -359,7 +377,6 @@ namespace Paint
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Paint";
             this.Load += new System.EventHandler(this.MainFormLoad);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainFormMouseUp);
             this.Colores.ResumeLayout(false);
             this.Figuras.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -384,5 +401,7 @@ namespace Paint
         private System.Windows.Forms.Button btn_run;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hintsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem liveDemoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem githubToolStripMenuItem;
     }
 }

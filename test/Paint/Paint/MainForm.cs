@@ -22,7 +22,7 @@ namespace Paint
     {
         Graphics g;
 
-
+        //declaring variables
         Pen p = new Pen(Color.Black, 1);
         Point sp = new Point(0, 0);
         Point ep = new Point(0, 0);
@@ -41,6 +41,9 @@ namespace Paint
         public int dSize = 0;
         public int counter = 0;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MainForm()
         {
             //
@@ -53,12 +56,12 @@ namespace Paint
             //
             color = Color.Black;
            }
-        void MainFormMouseUp(object sender, MouseEventArgs e)
-        {
 
-        }
-
-
+        /// <summary>
+        /// mouseDown event for x and y axis
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void PcanvasMouseDown(object sender, MouseEventArgs e)
         {
             sp = e.Location;
@@ -73,7 +76,11 @@ namespace Paint
         {
             shape = "brush";
         }
-
+        /// <summary>
+        /// button  click event for color box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void backcolorClick(object sender, EventArgs e)
         {
             //gets color dialog
@@ -87,6 +94,11 @@ namespace Paint
             }
 
         }
+        /// <summary>
+        /// mousemove event to draw line
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void PcanvasMouseMove(object sender, MouseEventArgs e)
         {
             if (k == 1)
@@ -100,6 +112,8 @@ namespace Paint
                     //this.Cursor = Cursors.Default;
                     p.Width = trackBar1.Value;
                     g.DrawLine(new Pen(color, p.Width), sp, ep);
+ 
+
                 }
                 else if (shape == "eraser")
                 {
@@ -118,36 +132,75 @@ namespace Paint
                 sp = ep;
             }
         }
+        /// <summary>
+        /// drawing shapes from draging option into panel 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void PcanvasMouseUp(object sender, MouseEventArgs e)
         {
             k = 0;
         }
+        /// <summary>
+        /// form load 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void MainFormLoad(object sender, EventArgs e)
         {
             g = Pcanvas.CreateGraphics();
         }
-
+        /// <summary>
+        /// button click event for pencil
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void btn_pencilClick(object sender, EventArgs e)
         {
             shape = "pencil";
         }
+        /// <summary>
+        /// button click event for eraser
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void btn_eraseClick(object sender, EventArgs e)
         {
             shape = "eraser";
             color = Color.White;
         }
+        /// <summary>
+        /// button click event for line
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void btn_lineClick(object sender, EventArgs e)
         {
             shape = "line";
         }
+        /// <summary>
+        /// button click event for circle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void btn_circleClick(object sender, EventArgs e)
         {
             shape = "circle";
         }
+        /// <summary>
+        /// button click event for rectangle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void btn_rectClick(object sender, EventArgs e)
         {
             shape = "rectangle";
         }
+        /// <summary>
+        /// button click event opening files
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -158,7 +211,11 @@ namespace Paint
                 Pcanvas.Image = (Image)Image.FromFile(o.FileName).Clone();
             }
         }
-
+        /// <summary>
+        /// button click event for saving 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Bitmap bmp = new Bitmap(Pcanvas.Width, Pcanvas.Height);
@@ -190,17 +247,30 @@ namespace Paint
 
             }
         }
-
+        /// <summary>
+        /// button click event for closing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-
+        /// <summary>
+        /// button click event for triangle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_triangle_Click(object sender, EventArgs e)
         {
             shape = "triangle";
         }
+        /// <summary>
+        /// drawing in canvas
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void PcanvasMouseClick(object sender, MouseEventArgs e)
         {
             if (k == 1)
@@ -272,25 +342,43 @@ namespace Paint
                 }
             }
         }
-
+        /// <summary>
+        /// button click event for clearing drawn objects
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void btn_clearClick(object sender, EventArgs e)
         {
             Pcanvas.Refresh();
             Pcanvas.Image = null;
         }
+        /// <summary>
+        /// trackbar for size
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             p.Width = trackBar1.Value;
 
         }
+        /// <summary>
+        /// button click event for polygon
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void btnpoly_Click(object sender, EventArgs e)
         {
             shape = "polygon";
         }
 
-
+        /// <summary>
+        /// to run command and draw something
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_run_Click(object sender, EventArgs e)
         {
             hasDrawOrMoveValue = false;
@@ -305,6 +393,10 @@ namespace Paint
 
             }
         }
+        /// <summary>
+        /// to load the command
+        /// </summary>        
+        //this function loads the command
         private void loadCommand()
         {
             int numberOfLines = textBox1.Lines.Length;
@@ -351,8 +443,10 @@ namespace Paint
 
             }
         }
-
-        private void RunCommand(String oneLineCommand)
+        /// <summary>
+        /// to run the command written in textbox
+        /// </summary>
+         private void RunCommand(String oneLineCommand)
         {
 
             Boolean hasPlus = oneLineCommand.Contains('+');
@@ -510,7 +604,9 @@ namespace Paint
 
 
         }
-
+        /// <summary>
+        /// to get line number of endif
+        /// </summary>
         private int GetEndifEndLineNumber()
         {
             int numberOfLines = textBox1.Lines.Length;
@@ -528,7 +624,9 @@ namespace Paint
             }
             return lineNum;
         }
-
+        /// <summary>
+        /// to get line number of if
+        /// </summary>
         private int GetIfStartLineNumber()
         {
             int numberOfLines = textBox1.Lines.Length;
@@ -554,7 +652,9 @@ namespace Paint
             }
             return lineNum;
         }
-
+        /// <summary>
+        /// to get line number of endloop
+        /// </summary>
         private int GetLoopEndLineNumber()
         {
             int numberOfLines = textBox1.Lines.Length;
@@ -572,7 +672,9 @@ namespace Paint
             }
             return lineNum;
         }
-
+        /// <summary>
+        /// to get line number of loop
+        /// </summary>
         private int GetLoopStartLineNumber()
         {
             int numberOfLines = textBox1.Lines.Length;
@@ -599,7 +701,9 @@ namespace Paint
             return lineNum;
 
         }
-
+        /// <summary>
+        /// to get the value of parameters of different shapes and return that value
+        /// </summary>
         private int GetSize(string lineCommand)
         {
             int value = 0;
@@ -626,7 +730,9 @@ namespace Paint
             }
             return value;
         }
-
+        /// <summary>
+        /// to send command to draw particular object
+        /// </summary>
         private void sendDrawCommand(string lineOfCommand)
         {
             String[] shapes = { "circle", "rectangle", "triangle", "polygon" };
@@ -798,12 +904,21 @@ namespace Paint
                 }
             }
         }
-
+        /// <summary>
+        /// to get line number of loop
+        /// </summary>
+        ///  /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void hintsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Hint hint = new Hint();
             hint.Show();
         }
+
+        private void githubToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Git git = new Git();
+         }
 
         private void DrawPolygon(int v1, int v2, int v3, int v4, int v5, int v6, int v7, int v8)
         {

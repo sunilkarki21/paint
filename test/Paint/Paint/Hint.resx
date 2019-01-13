@@ -119,7 +119,6 @@
   </resheader>
   <data name="textBox1.Text" xml:space="preserve">
     <value>Hints:
-
 For drawing without parameter: 
  circle 100 
  rectangle 100 100 
@@ -132,7 +131,7 @@ circle r
  rectangle h w 
  
 For declaring variable: 
- counter = 100 
+counter = 100 
  
 For looping: 
  r = 100 
@@ -146,6 +145,7 @@ For looping:
  if counter = 5 then 
  circle 100 
  end if 
+
  
 </value>
   </data>

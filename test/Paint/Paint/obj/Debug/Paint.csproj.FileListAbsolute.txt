@@ -62,3 +62,6 @@ C:\Users\Dell\Desktop\testpaint\test\Paint\Paint\obj\Debug\Paint.csproj.CoreComp
 C:\Users\Dell\Desktop\testpaint\test\Paint\Paint\obj\Debug\Paint.exe
 C:\Users\Dell\Desktop\testpaint\test\Paint\Paint\obj\Debug\Paint.pdb
 C:\Users\Dell\Desktop\testpaint\test\Paint\Paint\obj\Debug\Paint.Hint.resources
+C:\Users\Dell\Desktop\testpaint\test\Paint\Paint\bin\Debug\WebDriver.dll
+C:\Users\Dell\Desktop\testpaint\test\Paint\Paint\bin\Debug\WebDriver.xml
+C:\Users\Dell\Desktop\testpaint\test\Paint\Paint\obj\Debug\Paint.csproj.CopyComplete
